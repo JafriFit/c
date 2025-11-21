@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Awab Travel | Premium Tours & Experiences</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="module">
+      import React, { useEffect, useRef, useState } from "https://esm.sh/react@18.3.1";
+      import { createRoot } from "https://esm.sh/react-dom@18.3.1/client";
+
+      const tours = [
+        {
+          title: "Mediterranean Cruise & Islands",
+          description:
+            "Sail azure waters, explore Santorini sunsets, and savor Michelin-inspired dining onboard.",
+          tags: ["8 days", "All-inclusive"],
+          imageClass: "mediterranean",
+        },
+        {
+          title: "Swiss Alps Retreat",
+          description: "Wake up to snow-capped peaks, spa rituals, and panoramic train journeys.",
+          tags: ["6 days", "Private guide"],
+          imageClass: "alps",
+        },
+        {
+          title: "Luxury Safari & City Break",
+          description: "Track the Big Five with expert rangers before unwinding at Cape Town's waterfront.",
+          tags: ["9 days", "5★ lodges"],
+          imageClass: "safari",
+        },
+      ];
+
+      const destinations = [
+        {
+          location: "Doha → Paris",
+          highlight: "Champagne rooftop dinners and art-house promenades across the Seine.",
+        },
+        {
+          location: "Muscat → Maldives",
+          highlight: "Overwater villas, reef dives, and private chef tastings at sunset.",
+        },
+        {
+          location: "Dubai → Kyoto",
+          highlight: "Tea ceremonies, hidden alleys, and luxe ryokan stays under maple trees.",
+        },
+        {
+          location: "Kuwait → Cappadocia",
+          highlight: "Cave suites, balloon sunrises, and Anatolian culinary workshops.",
+        },
+      ];
+
+      const services = [
+        {
+          title: "Concierge Air Desk",
+          detail: "Business and first-class bookings with lounge access and chauffeured transfers.",
+          icon: "✈️",
+        },
+        {
+          title: "Bespoke Itineraries",
+          detail: "Tailored routes with vetted guides, dining reservations, and cultural moments.",
+          icon: "🧭",
+        },
+        {
+          title: "Group Experiences",
+          detail: "Retreats, incentives, and multi-gen escapes crafted to keep everyone delighted.",
+          icon: "👥",
+        },
+      ];
+
+      const testimonials = [
+        {
+          name: "Aisha & Omar",
+          quote: "Awab handled every transfer, tour, and table with care. We only had to enjoy our anniversary.",
+        },
+        {
+          name: "Khalid, Corporate Travel",
+          quote: "Flawless coordination for our leadership retreat. The team anticipated needs before we voiced them.",
+        },
+        {
+          name: "Noura",
+          quote: "From Doha to Tbilisi, every detail felt thoughtful—hotels, guides, and even surprise treats.",
+        },
+      ];
+
+      const metrics = [
+        { label: "Travelers hosted", value: "15k+" },
+        { label: "Custom packages", value: "120+" },
+        { label: "Concierge support", value: "24/7" },
+      ];
+
+      const FloatingGradient = () => <div className="floating-gradient" aria-hidden="true" />;
+
+      const useReveal = () => {
+        const ref = useRef(null);
+        useEffect(() => {
+          const el = ref.current;
+          if (!el) return;
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("reveal-visible");
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.25 }
+          );
+          observer.observe(el);
+          return () => observer.disconnect();
+        }, []);
+        return ref;
+      };
+
+      const Hero = () => {
+        const ref = useReveal();
+        return (
+          <header className="hero reveal" ref={ref}>
+            <FloatingGradient />
+            <Nav />
+            <div className="hero-content">
+              <div className="hero-text">
+                <p className="eyebrow">Luxury &amp; Leisure Travel</p>
+                <h1>Design your next journey with curated experiences.</h1>
+                <p className="lead">
+                  From family holidays to business class getaways, our experts pair exclusive itineraries with seamless
+                  logistics so you can simply enjoy the adventure.
+                </p>
+                <div className="hero-actions">
+                  <a className="btn primary" href="#contact">Plan your trip</a>
+                  <a className="btn ghost" href="#destinations">View destinations</a>
+                </div>
+                <div className="meta">
+                  {metrics.map((item) => (
+                    <div key={item.label}>
+                      <strong>{item.value}</strong>
+                      <span>{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="hero-card">
+                <div className="card-header">
+                  <p>Popular Departure</p>
+                  <span>Doha → Paris</span>
+                </div>
+                <div className="card-body">
+                  <div className="card-row">
+                    <div>
+                      <p className="label">Duration</p>
+                      <p className="value">7 nights</p>
+                    </div>
+                    <div>
+                      <p className="label">Guests</p>
+                      <p className="value">2 Adults</p>
+                    </div>
+                  </div>
+                  <div className="card-row">
+                    <div>
+                      <p className="label">Accommodation</p>
+                      <p className="value">5★ Boutique</p>
+                    </div>
+                    <div>
+                      <p className="label">Transfers</p>
+                      <p className="value">Private Sedan</p>
+                    </div>
+                  </div>
+                  <div className="pill">Includes flights + breakfast</div>
+                </div>
+                <div className="card-footer">
+                  <span className="price">Starting from $2,950</span>
+                  <button className="btn primary small">Hold my seat</button>
+                </div>
+              </div>
+            </div>
+          </header>
+        );
+      };
+
+      const Nav = () => {
+        const [open, setOpen] = useState(false);
+        useEffect(() => {
+          const handler = () => setOpen(false);
+          window.addEventListener("resize", handler);
+          return () => window.removeEventListener("resize", handler);
+        }, []);
+        return (
+          <nav className="nav">
+            <div className="brand">Awab Travel</div>
+            <button className={`nav-toggle ${open ? "open" : ""}`} aria-label="Toggle navigation" onClick={() => setOpen((v) => !v)}>
+              <span></span><span></span><span></span>
+            </button>
+            <ul className={`nav-links ${open ? "visible" : ""}`}>
+              <li><a href="#tours">Tours</a></li>
+              <li><a href="#destinations">Destinations</a></li>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+        );
+      };
+
+      const SectionHeader = ({ eyebrow, title, subhead }) => (
+        <div className="section-heading">
+          <p className="eyebrow">{eyebrow}</p>
+          <h2>{title}</h2>
+          {subhead && <p className="subhead">{subhead}</p>}
+        </div>
+      );
+
+      const Cards = ({ items }) => {
+        const ref = useReveal();
+        return (
+          <div className="grid cards reveal" ref={ref}>
+            {items.map((tour) => (
+              <article key={tour.title} className="card hover-rise">
+                <div className={`card-image ${tour.imageClass}`}></div>
+                <div className="card-content">
+                  <h3>{tour.title}</h3>
+                  <p>{tour.description}</p>
+                  <div className="tag-row">
+                    {tour.tags.map((tag) => (
+                      <span key={tag} className="pill">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        );
+      };
+
+      const DestinationList = () => {
+        const ref = useReveal();
+        return (
+          <div className="grid destinations reveal" ref={ref}>
+            {destinations.map((spot) => (
+              <article key={spot.location} className="destination-card hover-rise">
+                <div>
+                  <p className="eyebrow">Route</p>
+                  <h3>{spot.location}</h3>
+                  <p className="muted">{spot.highlight}</p>
+                </div>
+                <span className="badge">Now booking</span>
+              </article>
+            ))}
+          </div>
+        );
+      };
+
+      const Services = () => {
+        const ref = useReveal();
+        return (
+          <div className="grid services reveal" ref={ref}>
+            {services.map((service) => (
+              <article key={service.title} className="service-card hover-rise">
+                <div className="icon-ring">{service.icon}</div>
+                <div>
+                  <h3>{service.title}</h3>
+                  <p>{service.detail}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        );
+      };
+
+      const Testimonials = () => {
+        const ref = useReveal();
+        return (
+          <div className="marquee reveal" ref={ref}>
+            <div className="marquee-track">
+              {[...testimonials, ...testimonials].map((item, idx) => (
+                <article key={`${item.name}-${idx}`} className="testimonial">
+                  <p className="quote">“{item.quote}”</p>
+                  <p className="name">{item.name}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        );
+      };
+
+      const ContactForm = () => {
+        const ref = useReveal();
+        const [form, setForm] = useState({ name: "", email: "", message: "" });
+        const [status, setStatus] = useState("idle");
+        const [feedback, setFeedback] = useState("");
+
+        const handleChange = (e) => {
+          const { name, value } = e.target;
+          setForm((prev) => ({ ...prev, [name]: value }));
+        };
+
+        const handleSubmit = async (e) => {
+          e.preventDefault();
+          setStatus("loading");
+          setFeedback("");
+          try {
+            const res = await fetch("/api/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(form),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || "Unable to send message.");
+            setStatus("success");
+            setFeedback("Message sent! Our concierge team will reach out shortly.");
+            setForm({ name: "", email: "", message: "" });
+          } catch (err) {
+            setStatus("error");
+            setFeedback(err.message);
+          }
+        };
+
+        return (
+          <div className="contact-grid reveal" ref={ref}>
+            <div>
+              <p className="eyebrow">Plan with confidence</p>
+              <h3>Tell us where you're headed and what would make it unforgettable.</h3>
+              <p className="muted">
+                We respond within one business day with curated ideas, flights, stays, and concierge add-ons tailored to you.
+              </p>
+              <ul className="bullet-list">
+                <li>Dedicated travel designer</li>
+                <li>Multi-destination coordination</li>
+                <li>On-trip WhatsApp support</li>
+              </ul>
+            </div>
+            <form className="contact-card" onSubmit={handleSubmit}>
+              <div className="form-row">
+                <label>
+                  Name
+                  <input name="name" value={form.name} onChange={handleChange} required />
+                </label>
+                <label>
+                  Email
+                  <input name="email" type="email" value={form.email} onChange={handleChange} required />
+                </label>
+              </div>
+              <label>
+                How can we help?
+                <textarea name="message" rows="4" value={form.message} onChange={handleChange} required></textarea>
+              </label>
+              <button className="btn primary full" type="submit" disabled={status === "loading"}>
+                {status === "loading" ? "Sending..." : "Send message"}
+              </button>
+              {feedback && <p className={`feedback ${status}`}>{feedback}</p>}
+            </form>
+          </div>
+        );
+      };
+
+      const App = () => {
+        return (
+          <>
+            <Hero />
+            <main>
+              <section id="tours" className="section highlight">
+                <SectionHeader
+                  eyebrow="Signature Tours"
+                  title="Featured escapes to elevate every travel style."
+                  subhead="Handpicked itineraries balancing culture, cuisine, and breathtaking stays."
+                />
+                <Cards items={tours} />
+              </section>
+
+              <section id="destinations" className="section">
+                <SectionHeader
+                  eyebrow="New & Trending"
+                  title="Depart from the GCC to the world's most inspiring locales."
+                  subhead="Each route is paired with VIP arrival handling and vetted local hosts."
+                />
+                <DestinationList />
+              </section>
+
+              <section id="services" className="section highlight">
+                <SectionHeader
+                  eyebrow="What we handle"
+                  title="White-glove service from your inbox to your return home."
+                />
+                <Services />
+                <Testimonials />
+              </section>
+
+              <section id="contact" className="section">
+                <SectionHeader
+                  eyebrow="Start planning"
+                  title="Share your dates, dreams, and must-haves. We'll craft the rest."
+                />
+                <ContactForm />
+              </section>
+            </main>
+            <footer className="footer">
+              <p>Awab Travel — Premium tours, trusted in the Gulf.</p>
+            </footer>
+          </>
+        );
+      };
+
+      const container = document.getElementById("root");
+      const root = createRoot(container);
+      root.render(<App />);
+    </script>
+  </body>
+</html>
